@@ -1,6 +1,12 @@
 import { useParams, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { getUser, putUser } from "../../components/API/API";
+import {
+  Followers,
+  Status,
+  User,
+  UserTweets,
+} from "./Tweets.styled";
 
 export function Tweets() {
   const [tweet, setTweet] = useState({});
@@ -44,19 +50,21 @@ export function Tweets() {
   return (
     <div>
       <Link to="/">Back</Link>
-      <div>
+      <User>
         <img src={avatar} alt="some image" />
-        <h2>{user}</h2>
-        <p>{tweets} TWEETS</p>
+        <UserTweets>{tweets} TWEETS</UserTweets>
         {followers && (
-          <p>
+          <Followers>
             {followers.toLocaleString("en-US")} FOLLOWERS
-          </p>
+          </Followers>
         )}
-        <button onClick={handleFollowClick}>
+        <Status
+          isFollowing={isFollowing}
+          onClick={handleFollowClick}
+        >
           {isFollowing ? "FOLLOWING" : "FOLLOW"}
-        </button>
-      </div>
+        </Status>
+      </User>
     </div>
   );
 }

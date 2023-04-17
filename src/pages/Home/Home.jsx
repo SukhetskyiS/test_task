@@ -2,6 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getAllUsers } from "../../components/API/API";
 
+import {
+  List,
+  User,
+  Avatar,
+  Name,
+  Tweets,
+  Followers,
+  Status,
+  FilterContainer,
+  FilterLabel,
+  FilterSelect,
+  LoadMoreButton,
+} from "./Home.styled";
+
 export function Home() {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("show all");
@@ -40,42 +54,46 @@ export function Home() {
 
   return (
     <div>
-      <div>
-        <label>Filter:</label>
-        <select
+      <FilterContainer>
+        <FilterLabel>Filter:</FilterLabel>
+        <FilterSelect
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         >
           <option value="show all">Show all</option>
           <option value="follow">Follow</option>
           <option value="followings">Followings</option>
-        </select>
-      </div>
-      {tweetsToShow.map(
-        ({ id, avatar, user, tweets, followers }) => {
-          const isFollowing =
-            JSON.parse(localStorage.getItem(id)) || false;
+        </FilterSelect>
+      </FilterContainer>
+      <List>
+        {tweetsToShow.map(
+          ({ id, avatar, user, tweets, followers }) => {
+            const isFollowing =
+              JSON.parse(localStorage.getItem(id)) || false;
 
-          return (
-            <div key={id}>
-              <Link to={`/tweets/${id}`}>
-                <img src={avatar} alt="some image" />
-                <h2>{user}</h2>
-                <p>{tweets} TWEETS</p>
-                <p>
-                  {followers.toLocaleString("en-US")}{" "}
-                  FOLLOWERS
-                </p>
-                <p>
-                  {isFollowing ? "FOLLOWING" : "FOLLOW"}
-                </p>
-              </Link>
-            </div>
-          );
-        }
-      )}
+            return (
+              <User key={id}>
+                <Link to={`/tweets/${id}`}>
+                  <Avatar src={avatar} alt="some image" />
+                  <Name>{user}</Name>
+                  <Tweets>{tweets} TWEETS</Tweets>
+                  <Followers>
+                    {followers.toLocaleString("en-US")}{" "}
+                    FOLLOWERS
+                  </Followers>
+                  <Status isFollowing={isFollowing}>
+                    {isFollowing ? "FOLLOWING" : "FOLLOW"}
+                  </Status>
+                </Link>
+              </User>
+            );
+          }
+        )}
+      </List>
       {visibleTweets < filteredUsers.length && (
-        <button onClick={handleLoadMore}>Load More</button>
+        <LoadMoreButton onClick={handleLoadMore}>
+          Load More
+        </LoadMoreButton>
       )}
     </div>
   );
