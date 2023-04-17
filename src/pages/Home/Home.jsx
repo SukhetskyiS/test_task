@@ -26,9 +26,9 @@ export function Home() {
       JSON.parse(localStorage.getItem(id)) || false;
     switch (filter) {
       case "follow":
-        return isFollowing;
-      case "followings":
         return !isFollowing;
+      case "followings":
+        return isFollowing;
       default:
         return true;
     }
@@ -53,7 +53,7 @@ export function Home() {
   }, []);
 
   return (
-    <div>
+    <>
       <FilterContainer>
         <FilterLabel>Filter:</FilterLabel>
         <FilterSelect
@@ -95,6 +95,6 @@ export function Home() {
           Load More
         </LoadMoreButton>
       )}
-    </div>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { getUser, putUser } from "../../components/API/API";
 import {
@@ -6,7 +6,15 @@ import {
   Status,
   User,
   UserTweets,
+  Picture,
+  Logo,
+  Line,
+  Ellipse,
+  Avatar,
+  StyledLink,
 } from "./Tweets.styled";
+import picture from "../../images/picture.png";
+import logo from "../../images/logo.png";
 
 export function Tweets() {
   const [tweet, setTweet] = useState({});
@@ -14,7 +22,7 @@ export function Tweets() {
 
   const { userId } = useParams();
 
-  let { avatar, user, tweets, followers } = tweet;
+  let { avatar, tweets, followers } = tweet;
 
   const handleFollowClick = async () => {
     setIsFollowing(!isFollowing);
@@ -48,10 +56,15 @@ export function Tweets() {
   }, [userId]);
 
   return (
-    <div>
-      <Link to="/">Back</Link>
+    <>
+      <StyledLink to="/">Back</StyledLink>
       <User>
-        <img src={avatar} alt="some image" />
+        <Logo src={logo} alt="some logo" />
+        <Picture src={picture} alt="some image" />
+        <Line></Line>
+        <Ellipse></Ellipse>
+        <Avatar src={avatar} alt="some avatar" />
+
         <UserTweets>{tweets} TWEETS</UserTweets>
         {followers && (
           <Followers>
@@ -65,6 +78,6 @@ export function Tweets() {
           {isFollowing ? "FOLLOWING" : "FOLLOW"}
         </Status>
       </User>
-    </div>
+    </>
   );
 }

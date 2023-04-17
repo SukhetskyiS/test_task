@@ -90,6 +90,7 @@ export const Status = styled.p`
     props.isFollowing ? "#5CD3A8" : "#ebd8ff"};
   box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.25);
   border-radius: 10.3108px;
+  border: none;
 `;
 
 export const FilterContainer = styled.div`
